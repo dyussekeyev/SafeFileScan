@@ -11,12 +11,36 @@ $stmt->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>VirusTotal Clone</title>
+    <title>SafeFileScan</title>
+    <style>
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="index.php">Home</a>
+        <a href="upload.php">Upload</a>
+        <a href="scan_results.php">Scan Results</a>
+        <a href="admin.php">Admin</a>
+    </div>
+    
     <h1>Welcome to VirusTotal Clone</h1>
     <form action="upload.php" method="post" enctype="multipart/form-data">
         Select file to upload:
