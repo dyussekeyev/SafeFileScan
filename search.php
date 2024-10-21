@@ -1,3 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SafeFileScan</title>
+    <style>
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.php">Home</a>
+        <a href="upload.php">Upload</a>
+        <a href="scan_results.php">Scan Results</a>
+        <a href="admin.php">Admin</a>
+    </div>
+
 <?php
 include 'includes/db.php';
 include 'includes/functions.php';
@@ -52,3 +83,5 @@ if (isset($_GET['hash'])) {
     }
 }
 ?>
+
+</body></html>
