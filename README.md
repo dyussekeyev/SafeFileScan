@@ -2,7 +2,9 @@
 Awkward parody of VirusTotal :-)
 
 # Structure
-virustotal_clone/
+
+```
+SafeFileScan/
 ├── index.php
 ├── upload.php
 ├── search.php
@@ -23,3 +25,4 @@ virustotal_clone/
 ├── uploads/
 └── sql/
     ├── create_tables.sql
+```
