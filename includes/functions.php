@@ -46,6 +46,22 @@ function getScanResults($md5) {
     return $scanResults;
 }
 
+function getScanResultsByFileId($fileId) {
+    global $conn; // Assuming $conn is your database connection
+
+    $stmt = $conn->prepare("SELECT scan_date, kaspersky_result, trend_micro_result, eset_result FROM scan_results WHERE file_id = ?");
+    $stmt->bind_param("i", $fileId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $scanResults = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $scanResults[] = $row;
+    }
+
+    return $scanResults;
+}
+
 function checkAdminAuth() {
     if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
         header('Location: ../index.php');
