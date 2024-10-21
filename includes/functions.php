@@ -88,16 +88,18 @@ function checkSuperAdminAuth() {
 
 function createAdmin($username, $password, $role) {
     global $conn;
+    $hashedPassword = md5($password);
     $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $username, $password, $role);
+    $stmt->bind_param("sss", $username, $hashedPassword, $role);
     $stmt->execute();
     $stmt->close();
 }
 
 function changeAdminPassword($username, $newPassword) {
     global $conn;
+    $hashedPassword = md5($newPassword);
     $stmt = $conn->prepare("UPDATE users SET password = ? WHERE username = ?");
-    $stmt->bind_param("ss", $newPassword, $username);
+    $stmt->bind_param("ss", $hashedPassword, $username);
     $stmt->execute();
     $stmt->close();
 }
