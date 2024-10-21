@@ -24,7 +24,6 @@ if (isset($_GET['hash'])) {
         echo '<tr><td>MD5</td><td>' . htmlspecialchars($fileInfo['hash_md5']) . '</td></tr>';
         echo '<tr><td>SHA1</td><td>' . htmlspecialchars($fileInfo['hash_sha1']) . '</td></tr>';
         echo '<tr><td>SHA256</td><td>' . htmlspecialchars($fileInfo['hash_sha256']) . '</td></tr>';
-        echo '<tr><td>Imphash</td><td>' . htmlspecialchars($fileInfo['hash_imphash']) . '</td></tr>';
         echo '<tr><td>Size</td><td>' . htmlspecialchars($fileInfo['size']) . '</td></tr>';
         echo '<tr><td>First Upload Date</td><td>' . htmlspecialchars($fileInfo['first_upload_date']) . '</td></tr>';
         echo '<tr><td>Last Analysis Date</td><td>' . htmlspecialchars($fileInfo['last_analysis_date']) . '</td></tr>';
