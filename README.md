@@ -21,27 +21,26 @@ SafeFileScan is a PHP-based web application designed to scan files for potential
 ```
 SafeFileScan/
 ├── index.php
-├── upload.php
+├── navbar.php
 ├── search.php
-├── rescan.php
+├── upload.php
 ├── admin/
 │ ├── index.php
-│ ├── upload.php
-│ ├── delete_scan.php
-│ ├── delete_file.php
-├── superadmin/
-│ ├── index.php
-│ ├── manage_admins.php
-│ ├── view_logs.php
+├── css/
+│ ├── styles.css
 ├── includes/
 │ ├── db.php
 │ ├── functions.php
 ├── logs/
-├── uploads/
+│ ├── index.php
 └── sql/
-├── create_tables.sql
+│ ├── create_tables.sql
+├── superadmin/
+│ ├── index.php
+│ ├── view_logs.php
+├── uploads/
+│ ├── index.php
 ```
-
 
 ## Installation
 
