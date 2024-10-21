@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['file_id'])) {
     
     if ($fileInfo) {
         $filePath = 'uploads/' . $fileInfo['filename'];
-        
-        // Выполнение антивирусного сканирования (псевдокод)
+
+        // Perform AV scans (pseudo code)
         $results = performAVScans($filePath);
-        
-        // Сохранение результатов сканирования
+
+        // Save scan results
         saveScanResults($fileInfo['md5'], $results);
-        
+
         echo 'Файл успешно повторно просканирован.';
     } else {
         echo 'Файл не найден.';
