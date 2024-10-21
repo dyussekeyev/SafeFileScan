@@ -9,13 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_PO
     $password = $_POST['password'];
 
     // Validate user credentials (you need to implement the actual validation logic)
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT username, role FROM users WHERE username = ? AND password = ?");
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->bind_result($username, $role);
+    $stmt->fetch();
     
-    if ($result->num_rows > 0) {
+    if ($username) {
         $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
     } else {
         $error = "Invalid login credentials.";
     }
