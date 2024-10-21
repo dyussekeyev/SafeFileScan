@@ -19,8 +19,18 @@ function performAVScans($filePath) {
 function saveScanResults($md5, $results) {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO scan_results (file_md5, kaspersky_result, trend_micro_result, eset_result, scan_date) VALUES (?, ?, ?, ?, NOW())");
+
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+
     $stmt->bind_param("ssss", $md5, $results['Kaspersky'], $results['Trend Micro'], $results['ESET']);
     $stmt->execute();
+
+    if ($stmt->error) {
+        die('Execute failed: ' . htmlspecialchars($stmt->error));
+    }
+
     $stmt->close();
 }
 
