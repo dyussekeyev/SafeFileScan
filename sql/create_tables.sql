@@ -25,11 +25,12 @@ CREATE TABLE files (
 
 CREATE TABLE scan_results (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    file_md5 VARCHAR(32) NOT NULL,
+    file_id INT NOT NULL,
     kaspersky_result VARCHAR(255) NOT NULL,
     trend_micro_result VARCHAR(255) NOT NULL,
     eset_result VARCHAR(255) NOT NULL,
-    scan_date DATETIME NOT NULL
+    scan_date DATETIME NOT NULL,
+    FOREIGN KEY (file_id) REFERENCES files(id)
 );
 
 CREATE TABLE event_logs (
