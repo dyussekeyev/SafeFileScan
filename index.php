@@ -36,6 +36,7 @@ $stmt->close();
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
+        <a href="login">Log in</a>
     </div>
     
     <h1>Welcome to SafeFileScan!</h1>
