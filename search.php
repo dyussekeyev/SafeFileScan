@@ -24,20 +24,16 @@ if (isset($_GET['hash'])) {
         echo '</tr>';
         echo '</table>';
 
-        // Display scan results in multiple tables
+        // Display scan results in a single table
         echo '<h2>Scan Results</h2>';
         $scanResults = getScanResults($fileInfo['md5']);
         if ($scanResults) {
-            foreach ($scanResults as $result) {
-                echo '<table border="1">';
-                echo '<tr><th>Antivirus Name</th><th>Scan Date</th><th>Result</th></tr>';
-                echo '<tr>';
-                echo '<td>' . htmlspecialchars($result['antivirus_name']) . '</td>';
-                echo '<td>' . htmlspecialchars($result['scan_date']) . '</td>';
-                echo '<td>' . htmlspecialchars($result['result']) . '</td>';
-                echo '</tr>';
-                echo '</table><br>';
-            }
+            echo '<table border="1">';
+            echo '<tr><th>Antivirus Name</th><th>Result</th></tr>';
+            echo '<tr><td>Kaspersky</td><td>' . htmlspecialchars($scanResults['kaspersky_result']) . '</td></tr>';
+            echo '<tr><td>Trend Micro</td><td>' . htmlspecialchars($scanResults['trend_micro_result']) . '</td></tr>';
+            echo '<tr><td>ESET</td><td>' . htmlspecialchars($scanResults['eset_result']) . '</td></tr>';
+            echo '</table>';
         } else {
             echo 'No scan results found for this file.';
         }
