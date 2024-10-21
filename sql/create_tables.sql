@@ -26,9 +26,10 @@ CREATE TABLE files (
 CREATE TABLE scan_results (
     id INT AUTO_INCREMENT PRIMARY KEY,
     file_md5 VARCHAR(32) NOT NULL,
-    antivirus_name VARCHAR(50) NOT NULL,
-    scan_date DATETIME NOT NULL,
-    result VARCHAR(255) NOT NULL
+    kaspersky_result VARCHAR(255) NOT NULL,
+    trend_micro_result VARCHAR(255) NOT NULL,
+    eset_result VARCHAR(255) NOT NULL,
+    scan_date DATETIME NOT NULL
 );
 
 CREATE TABLE event_logs (
