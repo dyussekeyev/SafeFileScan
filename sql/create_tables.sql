@@ -41,3 +41,7 @@ CREATE TABLE event_logs (
     event_date DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- Create default users
+INSERT INTO users (username, password, role) VALUES ('superadmin', MD5('password'), 'superadmin');
+INSERT INTO users (username, password, role) VALUES ('admin', MD5('password'), 'admin');
