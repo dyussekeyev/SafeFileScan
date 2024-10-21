@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SafeFileScan</title>
+    <title>SafeFileScan - Search</title>
     <style>
         .navbar {
             overflow: hidden;
@@ -24,9 +24,6 @@
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="upload.php">Upload</a>
-        <a href="scan_results.php">Scan Results</a>
-        <a href="admin.php">Admin</a>
     </div>
 
 <?php
