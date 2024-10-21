@@ -36,10 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
             // Calculate other hashes
             $hash_md5 = hash_file('md5', $filePath);
             $hash_sha256 = hash_file('sha256', $filePath);
-            $imphash = ''; // Calculate imphash if applicable
 
             // Save file info to database
-            saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $imphash, $file['size']);
+            saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $file['size']);
 
             // Retrieve the file id
             $fileInfo = searchFileByHash($hash_sha1);
