@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "password";
-$dbname = "virustotal_clone";
+$dbname = "safefilescan_db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
