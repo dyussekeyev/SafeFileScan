@@ -16,7 +16,10 @@ $logs = getEventLogs();
 </head>
 <body>
 
-<h1>Event Logs</h1>
+<h1>SuperAdmin Dashboard - Event Logs</h1>
+<a href="index.php">Manage Admins</a><br>
+<a href="view_logs.php">View Logs</a><br>
+
 <table border="1">
     <tr>
         <th>ID</th>
