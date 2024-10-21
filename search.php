@@ -41,6 +41,13 @@ if (isset($_GET['hash'])) {
         } else {
             echo 'No scan results found for this file.';
         }
+
+        // Link to rescan.php
+        echo '<h2>Rescan File</h2>';
+        echo '<form action="rescan.php" method="post">';
+        echo '<input type="hidden" name="file_id" value="' . htmlspecialchars($fileInfo['id']) . '">';
+        echo '<input type="submit" value="Rescan">';
+        echo '</form>';
     } else {
         echo 'No file found with the given hash.';
     }
