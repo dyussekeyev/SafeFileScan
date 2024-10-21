@@ -25,10 +25,10 @@ CREATE TABLE files (
 CREATE TABLE scan_results (
     id INT AUTO_INCREMENT PRIMARY KEY,
     file_id INT NOT NULL,
-    scan_kaspersky VARCHAR(255),
-    scan_trendmicro VARCHAR(255),
-    scan_eset VARCHAR(255),
-    scan_date DATETIME NOT NULL,
+    verdict_kaspersky VARCHAR(255),
+    verdict_trendmicro VARCHAR(255),
+    verdict_eset VARCHAR(255),
+    date_scan DATETIME NOT NULL,
     FOREIGN KEY (file_id) REFERENCES files(id)
 );
 
