@@ -36,7 +36,7 @@ function saveScanResults($file_id, $results) {
 
 function searchFileByHash($hash) {
     global $conn;
-    $stmt = $conn->prepare("SELECT * FROM files WHERE md5 = ? OR sha1 = ? OR sha256 = ?");
+    $stmt = $conn->prepare("SELECT * FROM files WHERE hash_md5 = ? OR hash_sha1 = ? OR hash_sha256 = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
