@@ -2,7 +2,7 @@
 include 'navbar.php';
 
 // Fetch the 10 most recently uploaded files
-$stmt = $conn->prepare("SELECT hash_sha1, size, first_upload_date FROM files ORDER BY first_upload_date DESC LIMIT 10");
+$stmt = $conn->prepare("SELECT hash_sha1, size, date_first_upload FROM files ORDER BY date_first_upload DESC LIMIT 10");
 $stmt->execute();
 $result = $stmt->get_result();
 $files = $result->fetch_all(MYSQLI_ASSOC);
@@ -45,7 +45,7 @@ $stmt->close();
             <tr>
                 <td><a href="search.php?hash=<?php echo htmlspecialchars($file['sha1']); ?>"><?php echo htmlspecialchars($file['sha1']); ?></a></td>
                 <td><?php echo htmlspecialchars($file['size']); ?></td>
-                <td><?php echo htmlspecialchars($file['first_upload_date']); ?></td>
+                <td><?php echo htmlspecialchars($file['date_first_upload']); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
