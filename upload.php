@@ -15,7 +15,7 @@ require_once 'includes/functions.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     $file = $_FILES['fileToUpload'];
     $tempPath = $file['tmp_name'];
-    $hash_sha1 = hash_file('sha1', $tempPath);
+    $hash_sha1 = hash_file('hash_sha1', $tempPath);
     $filePath = 'uploads/' . $hash_sha1;
 
     // Check if file already exists by hash
@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     } else {
         if (move_uploaded_file($tempPath, $filePath)) {
             // Calculate other hashes
-            $hash_md5 = hash_file('md5', $filePath);
-            $hash_sha256 = hash_file('sha256', $filePath);
+            $hash_md5 = hash_file('hash_md5', $filePath);
+            $hash_sha256 = hash_file('hash_sha256', $filePath);
 
             // Save file info to database
             saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $file['size']);
