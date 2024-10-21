@@ -37,6 +37,9 @@ function saveScanResults($file_id, $results) {
 function searchFileByHash($hash) {
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM files WHERE md5 = ? OR sha1 = ? OR sha256 = ?");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
     $stmt->bind_param("sss", $hash, $hash, $hash);
     $stmt->execute();
     $result = $stmt->get_result();
