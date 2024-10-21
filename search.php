@@ -45,8 +45,8 @@
     <?php include 'navbar.php'; ?>
 
 <?php
-include 'includes/db.php';
-include 'includes/functions.php';
+require_once 'includes/db.php';
+require_once 'includes/functions.php';
 
 // Handle file search
 if (isset($_GET['hash'])) {
