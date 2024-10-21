@@ -3,6 +3,25 @@ session_start();
 include 'includes/db.php';
 include 'includes/functions.php';
 
+// Check if the user is logging in
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_POST['password'])) {
+    $username = $_POST['login'];
+    $password = $_POST['password'];
+
+    // Validate user credentials (you need to implement the actual validation logic)
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $_SESSION['username'] = $username;
+    } else {
+        $error = "Invalid login credentials.";
+    }
+    $stmt->close();
+}
+
 // Check if the user is logging out
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -27,15 +46,35 @@ $stmt->close();
             overflow: hidden;
             background-color: #333;
         }
-        .navbar a {
+        .navbar a, .navbar input[type=text], .navbar input[type=password], .navbar input[type=submit] {
             float: left;
             display: block;
             color: #f2f2f2;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
+            border: none;
+            background: none;
         }
-        .navbar a:hover {
+        .navbar input[type=text], .navbar input[type=password] {
+            background-color: #ddd;
+            color: black;
+            padding: 6px;
+            margin-top: 8px;
+            margin-right: 2px;
+            margin-left: 2px;
+            border-radius: 4px;
+        }
+        .navbar input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 16px;
+            margin-top: 8px;
+            margin-right: 2px;
+            margin-left: 2px;
+            border-radius: 4px;
+        }
+        .navbar a:hover, .navbar input[type=submit]:hover {
             background-color: #ddd;
             color: black;
         }
@@ -48,7 +87,14 @@ $stmt->close();
             <a href="#">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></a>
             <a href="index.php?logout=true">Log out</a>
         <?php else: ?>
-            <a href="login.php">Log in</a>
+            <form method="post" action="index.php" style="float: left;">
+                <input type="text" name="login" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Log in">
+            </form>
+            <?php if (isset($error)): ?>
+                <p style="color:red;"><?php echo $error; ?></p>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
     
