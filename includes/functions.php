@@ -94,6 +94,14 @@ function createAdmin($username, $password, $role) {
     $stmt->close();
 }
 
+function changeAdminPassword($username, $newPassword) {
+    global $conn;
+    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE username = ?");
+    $stmt->bind_param("ss", $newPassword, $username);
+    $stmt->execute();
+    $stmt->close();
+}
+
 function deleteScanResult($scanId) {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM scan_results WHERE id = ?");
