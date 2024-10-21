@@ -1,6 +1,6 @@
 -- Create the database
-CREATE DATABASE IF NOT EXISTS virustotal_clone;
-USE virustotal_clone;
+CREATE DATABASE IF NOT EXISTS safefilescan_db;
+USE safefilescan_db;
 
 -- Create tables
 CREATE TABLE users (
