@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['file_id'])) {
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
+        <a href="login">Log in</a>
     </div>
     
     <h1>Rescan the file</h1>
