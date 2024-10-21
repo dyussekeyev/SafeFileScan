@@ -22,16 +22,20 @@ if (isset($_GET['hash'])) {
         echo '<tr><td>Last Analysis Date</td><td>' . htmlspecialchars($fileInfo['last_analysis_date']) . '</td></tr>';
         echo '</table>';
 
-        // Display scan results in a single table
-        echo '<h2>Scan Results</h2>';
-        $scanResults = getScanResults($fileInfo['md5']);
+        // Display scan results in a table
+        echo '<h2>Scan Results History</h2>';
+        $scanResults = getScanResultsByFileId($fileInfo['id']);
         if ($scanResults) {
             echo '<table border="1">';
-            echo '<tr><th>Antivirus Name</th><th>Result</th></tr>';
-            echo '<tr><td>Scan Date</td><td>' . htmlspecialchars($scanResults['scan_date']) . '</td></tr>';
-            echo '<tr><td>Kaspersky</td><td>' . htmlspecialchars($scanResults['kaspersky_result']) . '</td></tr>';
-            echo '<tr><td>Trend Micro</td><td>' . htmlspecialchars($scanResults['trend_micro_result']) . '</td></tr>';
-            echo '<tr><td>ESET</td><td>' . htmlspecialchars($scanResults['eset_result']) . '</td></tr>';
+            echo '<tr><th>Scan Date</th><th>Kaspersky</th><th>Trend Micro</th><th>ESET</th></tr>';
+            foreach ($scanResults as $result) {
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($result['scan_date']) . '</td>';
+                echo '<td>' . htmlspecialchars($result['kaspersky_result']) . '</td>';
+                echo '<td>' . htmlspecialchars($result['trend_micro_result']) . '</td>';
+                echo '<td>' . htmlspecialchars($result['eset_result']) . '</td>';
+                echo '</tr>';
+            }
             echo '</table>';
         } else {
             echo 'No scan results found for this file.';
