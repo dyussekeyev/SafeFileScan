@@ -13,44 +13,7 @@ $stmt->close();
 <html>
 <head>
     <title>SafeFileScan</title>
-    <style>
-        .navbar {
-            overflow: hidden;
-            background-color: #333;
-        }
-        .navbar a, .navbar input[type=text], .navbar input[type=password], .navbar input[type=submit] {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            border: none;
-            background: none;
-        }
-        .navbar input[type=text], .navbar input[type=password] {
-            background-color: #ddd;
-            color: black;
-            padding: 6px;
-            margin-top: 8px;
-            margin-right: 2px;
-            margin-left: 2px;
-            border-radius: 4px;
-        }
-        .navbar input[type=submit] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 16px;
-            margin-top: 8px;
-            margin-right: 2px;
-            margin-left: 2px;
-            border-radius: 4px;
-        }
-        .navbar a:hover, .navbar input[type=submit]:hover {
-            background-color: #ddd;
-            color: black;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
