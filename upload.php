@@ -41,7 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     // Check if file already exists by hash
     $existingFile = searchFileByHash($sha1);
     if ($existingFile) {
-        echo 'File already exists.';
+        $fileId = $existingFile['id'];
+        echo 'File already exists. Rescanning...';
+
+        // Perform AV scans (pseudo code)
+        $results = performAVScans($filePath);
+
+        // Save scan results
+        saveScanResults($fileId, $results);
+
+        echo 'File rescanned successfully.';
     } else {
         if (move_uploaded_file($tempPath, $filePath)) {
             // Calculate other hashes
@@ -70,4 +79,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
 }
 ?>
 
-</body></html>
+</body>
+</html>
