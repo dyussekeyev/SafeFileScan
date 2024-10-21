@@ -1,8 +1,8 @@
 <?php
-function saveFileInfo($filename, $md5, $sha1, $sha256, $imphash, $size) {
+function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO files (filename, md5, sha1, sha256, imphash, size, first_upload_date, last_analysis_date) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
-    $stmt->bind_param("sssssi", $filename, $md5, $sha1, $sha256, $imphash, $size);
+    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, first_upload_date, last_analysis_date) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
+    $stmt->bind_param("sssi", $hash_md5, $hash_sha1, $hash_sha256, $size);
     $stmt->execute();
     $stmt->close();
 }
@@ -18,7 +18,7 @@ function performAVScans($filePath) {
 
 function saveScanResults($file_id, $results) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO scan_results (file_id, kaspersky_result, trend_micro_result, eset_result, scan_date) VALUES (?, ?, ?, ?, NOW())");
+    $stmt = $conn->prepare("INSERT INTO scan_results (file_id, verdict_kaspersky, verdict_trendmicro, verdict_eset, date_scan) VALUES (?, ?, ?, ?, NOW())");
 
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
@@ -45,21 +45,10 @@ function searchFileByHash($hash) {
     return $fileInfo;
 }
 
-function getScanResults($md5) {
-    global $conn;
-    $stmt = $conn->prepare("SELECT * FROM scan_results WHERE file_md5 = ?");
-    $stmt->bind_param("s", $md5);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $scanResults = $result->fetch_assoc();
-    $stmt->close();
-    return $scanResults;
-}
-
 function getScanResultsByFileId($fileId) {
     global $conn; // Assuming $conn is your database connection
 
-    $stmt = $conn->prepare("SELECT scan_date, kaspersky_result, trend_micro_result, eset_result FROM scan_results WHERE file_id = ?");
+    $stmt = $conn->prepare("SELECT verdict_kaspersky, verdict_trendmicro, verdict_eset, date_scan FROM scan_results WHERE file_id = ?");
     $stmt->bind_param("i", $fileId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -88,18 +77,16 @@ function checkSuperAdminAuth() {
 
 function createAdmin($username, $password, $role) {
     global $conn;
-    $hashedPassword = md5($password);
     $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $username, $hashedPassword, $role);
+    $stmt->bind_param("sss", $username, $password, $role);
     $stmt->execute();
     $stmt->close();
 }
 
 function changeAdminPassword($username, $newPassword) {
     global $conn;
-    $hashedPassword = md5($newPassword);
     $stmt = $conn->prepare("UPDATE users SET password = ? WHERE username = ?");
-    $stmt->bind_param("ss", $hashedPassword, $username);
+    $stmt->bind_param("ss", $newPassword, $username);
     $stmt->execute();
     $stmt->close();
 }
