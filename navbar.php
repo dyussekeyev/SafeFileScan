@@ -31,12 +31,21 @@ if (isset($_GET['logout'])) {
 ?>
 
 <div class="navbar">
-    <a href="index.php">Home</a>
+    <a href="index.php" style="float: left;">Home</a>
+    
+    <!-- Centered search form -->
+    <form method="get" action="search.php" style="text-align: center; margin: 0 auto;">
+        <input type="text" name="hash" placeholder="Search by hash" required>
+        <input type="submit" value="Search">
+    </form>
+
     <?php if (isset($_SESSION['username'])): ?>
-        <a href="#">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></a>
-        <a href="index.php?logout=true">Log out</a>
+        <div style="float: right;">
+            <a href="#">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+            <a href="index.php?logout=true">Log out</a>
+        </div>
     <?php else: ?>
-        <form method="post" action="index.php" style="float: left;">
+        <form method="post" action="index.php" style="float: right;">
             <input type="text" name="login" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="submit" value="Log in">
