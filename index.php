@@ -26,13 +26,6 @@ $stmt->close();
     <input type="submit" value="Upload File" name="submit">
 </form>
 
-<h2>Search the file</h2>
-<form action="search.php" method="get">
-    Search by Hash:
-    <input type="text" name="hash" placeholder="md5, sha1, or sha256">
-    <input type="submit" value="Search">
-</form>
-
 <h2>Last 10 Uploaded Files</h2>
 <?php if (!empty($files)): ?>
     <table border="1">
@@ -52,5 +45,6 @@ $stmt->close();
 <?php else: ?>
     <p>No files found.</p>
 <?php endif; ?>
+
 </body>
 </html>
