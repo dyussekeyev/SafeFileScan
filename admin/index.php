@@ -1,9 +1,9 @@
 <?php
 include('../navbar.php');
 
-session_start();
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
+
 checkAdminAuth();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
