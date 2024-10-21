@@ -43,7 +43,7 @@ $stmt->close();
         </tr>
         <?php foreach ($files as $file): ?>
             <tr>
-                <td><a href="search.php?hash=<?php echo htmlspecialchars($file['sha1']); ?>"><?php echo htmlspecialchars($file['sha1']); ?></a></td>
+                <td><a href="search.php?hash=<?php echo htmlspecialchars($file['hash_sha1']); ?>"><?php echo htmlspecialchars($file['hash_sha1']); ?></a></td>
                 <td><?php echo htmlspecialchars($file['size']); ?></td>
                 <td><?php echo htmlspecialchars($file['date_first_upload']); ?></td>
             </tr>
