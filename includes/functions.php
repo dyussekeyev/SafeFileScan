@@ -41,10 +41,7 @@ function getScanResults($md5) {
     $stmt->bind_param("s", $md5);
     $stmt->execute();
     $result = $stmt->get_result();
-    $scanResults = [];
-    while ($row = $result->fetch_assoc()) {
-        $scanResults[] = $row;
-    }
+    $scanResults = $result->fetch_assoc();
     $stmt->close();
     return $scanResults;
 }
