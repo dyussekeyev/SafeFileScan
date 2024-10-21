@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['file_id'])) {
         $results = performAVScans($filePath);
 
         // Save scan results
-        saveScanResults($fileInfo['md5'], $results);
+        saveScanResults($fileId, $results);
 
         echo 'Файл успешно повторно просканирован.';
     } else {
