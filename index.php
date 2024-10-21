@@ -36,17 +36,18 @@ $stmt->close();
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="upload.php">Upload</a>
-        <a href="scan_results.php">Scan Results</a>
-        <a href="admin.php">Admin</a>
     </div>
     
-    <h1>Welcome to VirusTotal Clone</h1>
+    <h1>Welcome to SafeFileScan!</h1>
+
+    <h2>Upload the file</h2>
     <form action="upload.php" method="post" enctype="multipart/form-data">
         Select file to upload:
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload File" name="submit">
     </form>
+
+    <h2>Search the file</h2>
     <form action="search.php" method="get">
         Search by Hash:
         <input type="text" name="hash" placeholder="md5, sha1, or sha256">
