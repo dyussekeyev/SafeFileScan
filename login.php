@@ -1,40 +1,43 @@
 <?php
 session_start();
-include 'includes/db.php';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = md5($_POST['password']);
-
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-    $stmt->close();
-
-    if ($user) {
-        $_SESSION['user_role'] = $user['role'];
-        $_SESSION['username'] = $user['username'];
-        header('Location: index.php');
-    } else {
-        $error = "Invalid username or password";
-    }
-}
+session_destroy();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SafeFileScan - Login</title>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+    <style>
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="login.php" method="post">
-        Username: <input type="text" name="username" required><br>
-        Password: <input type="password" name="password" required><br>
-        <input type="submit" value="Login">
-    </form>
-    <?php if (isset($error)) { echo "<p>$error</p>"; } ?>
+    <div class="navbar">
+        <a href="../index.php">Home</a>
+    </div>
+    <div class="message">
+        <p>You have successfully logged out.</p>
+    </div>
 </body>
 </html>
