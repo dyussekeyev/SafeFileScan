@@ -18,12 +18,10 @@ function performAVScans($filePath) {
 
 function saveScanResults($md5, $results) {
     global $conn;
-    foreach ($results as $antivirus => $result) {
-        $stmt = $conn->prepare("INSERT INTO scan_results (file_md5, antivirus_name, scan_date, result) VALUES (?, ?, NOW(), ?)");
-        $stmt->bind_param("sss", $md5, $antivirus, $result);
-        $stmt->execute();
-        $stmt->close();
-    }
+    $stmt = $conn->prepare("INSERT INTO scan_results (file_md5, kaspersky_result, trend_micro_result, eset_result, scan_date) VALUES (?, ?, ?, ?, NOW())");
+    $stmt->bind_param("ssss", $md5, $results['Kaspersky'], $results['Trend Micro'], $results['ESET']);
+    $stmt->execute();
+    $stmt->close();
 }
 
 function searchFileByHash($hash) {
