@@ -51,11 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
             // Save file info to database
             saveFileInfo($sha1, $md5, $sha1, $sha256, $imphash, $file['size']);
 
+            // Retrieve the file id
+            $fileInfo = searchFileByHash($sha1);
+            $fileId = $fileInfo['id'];
+
             // Perform AV scans (pseudo code)
             $results = performAVScans($filePath);
 
             // Save scan results
-            saveScanResults($md5, $results);
+            saveScanResults($fileId, $results);
 
             echo 'File uploaded and analyzed successfully.';
         } else {
