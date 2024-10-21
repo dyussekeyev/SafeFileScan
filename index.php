@@ -1,6 +1,14 @@
 <?php
+session_start();
 include 'includes/db.php';
 include 'includes/functions.php';
+
+// Check if the user is logging out
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
 
 // Fetch the 10 most recently uploaded files
 $stmt = $conn->prepare("SELECT filename, md5, size, first_upload_date FROM files ORDER BY first_upload_date DESC LIMIT 10");
@@ -36,7 +44,12 @@ $stmt->close();
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="login.php">Log in</a>
+        <?php if (isset($_SESSION['username'])): ?>
+            <a href="#">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+            <a href="index.php?logout=true">Log out</a>
+        <?php else: ?>
+            <a href="login.php">Log in</a>
+        <?php endif; ?>
     </div>
     
     <h1>Welcome to SafeFileScan!</h1>
