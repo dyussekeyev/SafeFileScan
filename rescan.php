@@ -38,10 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['file_id'])) {
     echo 'Неверный запрос.';
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SafeFileScan - Повторное сканирование файла</title>
+    <title>SafeFileScan - ReScan</title>
     <style>
         .navbar {
             overflow: hidden;
@@ -64,14 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['file_id'])) {
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="upload.php">Upload</a>
-        <a href="scan_results.php">Scan Results</a>
-        <a href="admin.php">Admin</a>
     </div>
     
-    <h1>Повторное сканирование файла</h1>
+    <h1>Rescan the file</h1>
     <form action="rescan.php" method="post">
-        Введите ID файла для повторного сканирования:
+        ID:
         <input type="text" name="file_id">
         <input type="submit" value="Повторное сканирование">
     </form>
