@@ -1,8 +1,11 @@
 <?php
 function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, date_first_upload, date_last_analysis) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
-    $stmt->bind_param("sssi", $hash_md5, $hash_sha1, $hash_sha256, $size);
+    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, date_first_upload, date_last_analysis) VALUES (?, ?, ?, ?, NOW(), NOW())");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+    $stmt->bind_param("ssss", $hash_md5, $hash_sha1, $hash_sha256, $size);
     $stmt->execute();
     $stmt->close();
 }
