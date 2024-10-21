@@ -16,7 +16,6 @@ CREATE TABLE files (
     hash_md5 VARCHAR(32) NOT NULL,
     hash_sha1 VARCHAR(40) NOT NULL,
     hash_sha256 VARCHAR(64) NOT NULL,
-    hash_imphash VARCHAR(64),
     size INT NOT NULL,
     date_first_upload DATETIME NOT NULL,
     date_last_analysis DATETIME NOT NULL
