@@ -39,12 +39,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['file_id'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Повторное сканирование файла</title>
+    <title>SafeFileScan - Повторное сканирование файла</title>
+    <style>
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="index.php">Home</a>
+        <a href="upload.php">Upload</a>
+        <a href="scan_results.php">Scan Results</a>
+        <a href="admin.php">Admin</a>
+    </div>
+    
     <h1>Повторное сканирование файла</h1>
     <form action="rescan.php" method="post">
         Введите ID файла для повторного сканирования:
