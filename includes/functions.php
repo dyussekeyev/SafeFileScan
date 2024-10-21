@@ -54,7 +54,7 @@ function searchFileByHash($hash) {
 function getScanResultsByFileId($fileId) {
     global $conn; // Assuming $conn is your database connection
 
-    $stmt = $conn->prepare("SELECT verdict_kaspersky, verdict_trendmicro, verdict_eset, date_scan FROM scan_results WHERE file_id = ?");
+    $stmt = $conn->prepare("SELECT id, verdict_kaspersky, verdict_trendmicro, verdict_eset, date_scan FROM scan_results WHERE file_id = ?");
     $stmt->bind_param("i", $fileId);
     $stmt->execute();
     $result = $stmt->get_result();
