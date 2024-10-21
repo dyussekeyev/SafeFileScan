@@ -42,5 +42,5 @@ CREATE TABLE event_logs (
 );
 
 -- Create default users
-INSERT INTO users (username, password, role) VALUES ('superadmin', MD5('password'), 'superadmin');
-INSERT INTO users (username, password, role) VALUES ('admin', MD5('password'), 'admin');
+INSERT INTO users (username, password, role) VALUES ('superadmin', 'password', 'superadmin');
+INSERT INTO users (username, password, role) VALUES ('admin', 'password', 'admin');
