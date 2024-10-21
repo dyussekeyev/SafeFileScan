@@ -28,6 +28,7 @@ if (isset($_GET['hash'])) {
         if ($scanResults) {
             echo '<table border="1">';
             echo '<tr><th>Antivirus Name</th><th>Result</th></tr>';
+            echo '<tr><td>Scan Date</td><td>' . htmlspecialchars($scanResults['scan_date']) . '</td></tr>';
             echo '<tr><td>Kaspersky</td><td>' . htmlspecialchars($scanResults['kaspersky_result']) . '</td></tr>';
             echo '<tr><td>Trend Micro</td><td>' . htmlspecialchars($scanResults['trend_micro_result']) . '</td></tr>';
             echo '<tr><td>ESET</td><td>' . htmlspecialchars($scanResults['eset_result']) . '</td></tr>';
