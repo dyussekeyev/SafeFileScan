@@ -21,6 +21,7 @@ if (isset($_GET['hash'])) {
         echo '<h2>File Info</h2>';
         echo '<table border="1">';
         echo '<tr><th>Property</th><th>Value</th></tr>';
+        echo '<tr><td>ID</td><td>' . htmlspecialchars($fileInfo['id']) . '</td></tr>';
         echo '<tr><td>MD5</td><td>' . htmlspecialchars($fileInfo['hash_md5']) . '</td></tr>';
         echo '<tr><td>SHA1</td><td>' . htmlspecialchars($fileInfo['hash_sha1']) . '</td></tr>';
         echo '<tr><td>SHA256</td><td>' . htmlspecialchars($fileInfo['hash_sha256']) . '</td></tr>';
@@ -34,9 +35,10 @@ if (isset($_GET['hash'])) {
         $scanResults = getScanResultsByFileId($fileInfo['id']);
         if ($scanResults) {
             echo '<table border="1">';
-            echo '<tr><th>Scan Date</th><th>Kaspersky</th><th>Trend Micro</th><th>ESET</th></tr>';
+            echo '<tr><th>ID</th><th>Scan Date</th><th>Kaspersky</th><th>Trend Micro</th><th>ESET</th></tr>';
             foreach ($scanResults as $result) {
                 echo '<tr>';
+                echo '<td>' . htmlspecialchars($result['id']) . '</td>';
                 echo '<td>' . htmlspecialchars($result['date_scan']) . '</td>';
                 echo '<td>' . htmlspecialchars($result['verdict_kaspersky']) . '</td>';
                 echo '<td>' . htmlspecialchars($result['verdict_trendmicro']) . '</td>';
