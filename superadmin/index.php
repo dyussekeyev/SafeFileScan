@@ -7,7 +7,7 @@ checkSuperAdminAuth();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['create_admin'])) {
         $username = $_POST['username'];
-        $password = $_POST['password']);
+        $password = $_POST['password');
         $role = $_POST['role'];
         createAdmin($username, $password, $role);
         echo 'Admin created successfully.';
@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
 <h1>SuperAdmin Dashboard</h1>
+<a href="index.php">Manage Admins</a><br>
 <a href="view_logs.php">View Logs</a><br>
 
 <h1>Create Admin</h1>
