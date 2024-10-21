@@ -13,22 +13,21 @@ CREATE TABLE users (
 
 CREATE TABLE files (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    filename VARCHAR(255) NOT NULL,
-    md5 VARCHAR(32) NOT NULL,
-    sha1 VARCHAR(40) NOT NULL,
-    sha256 VARCHAR(64) NOT NULL,
-    imphash VARCHAR(64),
+    hash_md5 VARCHAR(32) NOT NULL,
+    hash_sha1 VARCHAR(40) NOT NULL,
+    hash_sha256 VARCHAR(64) NOT NULL,
+    hash_imphash VARCHAR(64),
     size INT NOT NULL,
-    first_upload_date DATETIME NOT NULL,
-    last_analysis_date DATETIME NOT NULL
+    date_first_upload DATETIME NOT NULL,
+    date_last_analysis DATETIME NOT NULL
 );
 
 CREATE TABLE scan_results (
     id INT AUTO_INCREMENT PRIMARY KEY,
     file_id INT NOT NULL,
-    kaspersky_result VARCHAR(255) NOT NULL,
-    trend_micro_result VARCHAR(255) NOT NULL,
-    eset_result VARCHAR(255) NOT NULL,
+    scan_kaspersky VARCHAR(255),
+    scan_trendmicro VARCHAR(255),
+    scan_eset VARCHAR(255),
     scan_date DATETIME NOT NULL,
     FOREIGN KEY (file_id) REFERENCES files(id)
 );
