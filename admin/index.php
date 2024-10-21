@@ -26,10 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
 <h1>Admin Dashboard</h1>
-<a href="index.php">Delete Scan</a><br>
-<a href="index.php">Delete File</a><br>
 
-<h1>Delete File Info</h1>
+<h2>Delete File Info</h2>
 <form action="index.php" method="post">
     <input type="hidden" name="delete_file" value="1">
     Enter File ID to delete:
@@ -37,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="submit" value="Delete File">
 </form>
 
-<h1>Delete Scan Result</h1>
+<h2>Delete Scan Result</h2>
 <form action="index.php" method="post">
     <input type="hidden" name="delete_scan" value="1">
     Enter Scan ID to delete:
