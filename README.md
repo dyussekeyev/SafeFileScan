@@ -1,8 +1,23 @@
-## Description
+# SafeFileScan
 
 SafeFileScan is an awkward parody of VirusTotal, created to scan files for potential threats. This project is entirely written in PHP.
 
-# Structure
+## Table of Contents
+- [Description](#description)
+- [Structure](#structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Admin and Superadmin](#admin-and-superadmin)
+- [Includes](#includes)
+- [Logs and Uploads](#logs-and-uploads)
+- [Contribution](#contribution)
+- [License](#license)
+
+## Description
+
+SafeFileScan is a PHP-based web application designed to scan files for potential threats. It aims to provide basic file scanning functionalities similar to VirusTotal, but in a simplified and educational context.
+
+## Structure
 ```
 SafeFileScan/
 ├── index.php
@@ -10,22 +25,23 @@ SafeFileScan/
 ├── search.php
 ├── rescan.php
 ├── admin/
-│   ├── index.php
-│   ├── upload.php
-│   ├── delete_scan.php
-│   ├── delete_file.php
+│ ├── index.php
+│ ├── upload.php
+│ ├── delete_scan.php
+│ ├── delete_file.php
 ├── superadmin/
-│   ├── index.php
-│   ├── manage_admins.php
-│   ├── view_logs.php
+│ ├── index.php
+│ ├── manage_admins.php
+│ ├── view_logs.php
 ├── includes/
-│   ├── db.php
-│   ├── functions.php
+│ ├── db.php
+│ ├── functions.php
 ├── logs/
 ├── uploads/
 └── sql/
-    ├── create_tables.sql
+├── create_tables.sql
 ```
+
 
 ## Installation
 
@@ -37,7 +53,8 @@ SafeFileScan/
     ```sh
     cd SafeFileScan
     ```
-3. Set up the database by running the SQL script located in `sql/create_tables.sql`.
+3. Install necessary dependencies (e.g., PHP, MySQL).
+4. Set up the database by running the SQL script located in `sql/create_tables.sql`.
 
 ## Usage
 
@@ -63,6 +80,10 @@ The `includes/` directory contains:
 - `logs/`: Directory for storing logs.
 - `uploads/`: Directory for storing uploaded files.
 
+## Contribution
+
+Contributions are welcome! Please fork this repository and submit a pull request with your improvements.
+
 ## License
 
-This project is licensed under the License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-3.0 License. See the [LICENSE](LICENSE) file for details.
