@@ -10,13 +10,13 @@ function getBasicProperties($filePath) {
     ];
 }
 
-function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size) {
+function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, date_first_upload, date_last_analysis) VALUES (?, ?, ?, ?, NOW(), NOW())");
+    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, file_type, date_first_upload, date_last_analysis) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("ssss", $hash_md5, $hash_sha1, $hash_sha256, $size);
+    $stmt->bind_param("sssss", $hash_md5, $hash_sha1, $hash_sha256, $size, $file_type);
     $stmt->execute();
     $stmt->close();
 }
