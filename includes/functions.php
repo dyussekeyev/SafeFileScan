@@ -16,7 +16,7 @@ function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("sssss", $hash_md5, $hash_sha1, $hash_sha256, $size, $file_type);
+    $stmt->bind_param("sssis", $hash_md5, $hash_sha1, $hash_sha256, $size, $file_type);
     $stmt->execute();
     $stmt->close();
 }
