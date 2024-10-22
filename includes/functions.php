@@ -1,10 +1,12 @@
 <?php
 function getBasicProperties($filePath) {
+    $fileType = shell_exec("file -b " . escapeshellarg($filePath));
     return [
         'md5' => hash_file('md5', $filePath),
         'sha1' => hash_file('sha1', $filePath),
         'sha256' => hash_file('sha256', $filePath),
-        'size' => filesize($filePath)
+        'size' => filesize($filePath),
+        'file_type' => trim($fileType) // Trim any trailing newline
     ];
 }
 
