@@ -1,4 +1,13 @@
 <?php
+function getBasicProperties($filePath) {
+    return [
+        'md5' => hash_file('md5', $filePath),
+        'sha1' => hash_file('sha1', $filePath),
+        'sha256' => hash_file('sha256', $filePath),
+        'size' => filesize($filePath)
+    ];
+}
+
 function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size) {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, date_first_upload, date_last_analysis) VALUES (?, ?, ?, ?, NOW(), NOW())");
