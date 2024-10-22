@@ -166,6 +166,20 @@ function deleteScanResult($scanId) {
 
 function deleteFileInfo($fileId) {
     global $conn;
+
+    // Delete related scan results
+    $stmt = $conn->prepare("DELETE FROM scan_results WHERE file_id = ?");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+    $stmt->bind_param("i", $fileId);
+    $stmt->execute();
+    if ($stmt->error) {
+        die('Execute failed: ' . htmlspecialchars($stmt->error));
+    }
+    $stmt->close();
+
+    // Delete the file record
     $stmt = $conn->prepare("DELETE FROM files WHERE id = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
