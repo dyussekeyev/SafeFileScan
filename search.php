@@ -26,6 +26,7 @@ if (isset($_GET['hash'])) {
         echo '<tr><td>SHA1</td><td>' . htmlspecialchars($fileInfo['hash_sha1']) . '</td></tr>';
         echo '<tr><td>SHA256</td><td>' . htmlspecialchars($fileInfo['hash_sha256']) . '</td></tr>';
         echo '<tr><td>Size</td><td>' . htmlspecialchars($fileInfo['size']) . '</td></tr>';
+        echo '<tr><td>File Type</td><td>' . htmlspecialchars($fileInfo['file_type']) . '</td></tr>';
         echo '<tr><td>First Upload Date</td><td>' . htmlspecialchars($fileInfo['date_first_upload']) . '</td></tr>';
         echo '<tr><td>Last Analysis Date</td><td>' . htmlspecialchars($fileInfo['date_last_analysis']) . '</td></tr>';
         echo '</table>';
