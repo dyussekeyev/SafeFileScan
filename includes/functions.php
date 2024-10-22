@@ -1,5 +1,9 @@
 <?php
 function getBasicProperties($filePath) {
+    if (empty($filePath)) {
+        throw new ValueError("Path cannot be empty");
+    }
+
     $fileType = shell_exec("file -b " . escapeshellarg($filePath));
     if ($fileType === null) {
         die('Error executing file command.');
