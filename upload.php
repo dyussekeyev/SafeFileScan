@@ -15,11 +15,11 @@ require_once 'includes/functions.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     $file = $_FILES['fileToUpload'];
     $tempPath = $file['tmp_name'];
-    $hash_sha1 = hash_file('sha1', $tempPath); // Corrected algorithm name
-    $filePath = 'uploads/' . $hash_sha1;
+    $hashes = getBasicProperties($tempPath);
+    $filePath = 'uploads/' . $hashes['sha1'];
 
     // Check if file already exists by hash
-    $existingFile = searchFileByHash($hash_sha1);
+    $existingFile = searchFileByHash($hashes['sha1']);
     if ($existingFile) {
         $fileId = $existingFile['id'];
         echo 'File already exists. Rescanning...';
@@ -32,16 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
 
         echo 'File rescanned successfully.';
     } else {
-        if (move_uploaded_file($tempPath, $filePath)) { // Ensure filePath is not a directory
-            // Calculate other hashes
-            $hash_md5 = hash_file('md5', $filePath);
-            $hash_sha256 = hash_file('sha256', $filePath);
-
+        if (move_uploaded_file($tempPath, $filePath)) {
             // Save file info to database
-            saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $file['size']);
+            saveFileInfo($hashes['md5'], $hashes['sha1'], $hashes['sha256'], $hashes['size']);
 
             // Retrieve the file id
-            $fileInfo = searchFileByHash($hash_sha1);
+            $fileInfo = searchFileByHash($hashes['sha1']);
             $fileId = $fileInfo['id'];
 
             // Perform AV scans (pseudo code)
