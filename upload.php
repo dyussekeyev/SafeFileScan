@@ -38,7 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
             $hash_sha256 = hash_file('sha256', $filePath);
 
             // Save file info to database
-            saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $file['size']);
+            $name = $file['name'];
+            $type = $file['type'];
+            $size = $file['size'];
+            $content = file_get_contents($filePath);
+
+            $stmt = $conn->prepare("INSERT INTO files (name, type, size, content) VALUES (?, ?, ?, ?)");
+            if ($stmt === false) {
+                die("Prepare failed: " . $conn->error);
+            }
+            $stmt->bind_param("ssis", $name, $type, $size, $content);
+            if (!$stmt->execute()) {
+                die("Execute failed: " . $stmt->error);
+            }
+            $stmt->close();
 
             // Retrieve the file id
             $fileInfo = searchFileByHash($hash_sha1);
