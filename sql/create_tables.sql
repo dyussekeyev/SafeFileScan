@@ -17,6 +17,7 @@ CREATE TABLE files (
     hash_sha1 VARCHAR(40) NOT NULL,
     hash_sha256 VARCHAR(64) NOT NULL,
     size INT NOT NULL,
+    file_type VARCHAR(255),
     date_first_upload DATETIME NOT NULL,
     date_last_analysis DATETIME NOT NULL
 );
