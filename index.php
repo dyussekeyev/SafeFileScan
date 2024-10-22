@@ -41,7 +41,6 @@ $stmt->close();
 
 <h2>Upload the file</h2>
 <form action="upload.php" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
     Select file to upload:
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload File" name="submit">
