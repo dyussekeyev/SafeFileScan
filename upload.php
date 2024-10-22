@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     } else {
         if (move_uploaded_file($tempPath, $filePath)) {
             // Save file info to database
-            saveFileInfo($hashes['md5'], $hashes['sha1'], $hashes['sha256'], $hashes['size']);
+            saveFileInfo($hashes['md5'], $hashes['sha1'], $hashes['sha256'], $hashes['size'], $hashes['file_type']);
 
             // Retrieve the file id
             $fileInfo = searchFileByHash($hashes['sha1']);
