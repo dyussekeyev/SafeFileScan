@@ -31,13 +31,7 @@ function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     $stmt->close();
 }
 
-function performAVScans($filePath) {
-    // This is a placeholder function. Integrate actual AV scan logic.
-    return [
-        'Kaspersky' => 'Clean',
-        'Trend Micro' => 'Clean',
-        'ESET' => 'Clean'
-    ];
+function initAVScans($filePath) {
 }
 
 function saveScanResults($file_id, $results) {
@@ -97,14 +91,7 @@ function getScanResultsByFileId($fileId) {
 }
 
 function checkAdminAuth() {
-    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-        header('Location: ../index.php');
-        exit;
-    }
-}
-
-function checkSuperAdminAuth() {
-    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'superadmin') {
+    if (!isset($_SESSION['logged'])) {
         header('Location: ../index.php');
         exit;
     }
@@ -178,18 +165,5 @@ function deleteFileInfo($fileId) {
         die('Execute failed: ' . htmlspecialchars($stmt->error));
     }
     $stmt->close();
-}
-
-function getEventLogs() {
-    global $conn;
-    $result = $conn->query("SELECT * FROM event_logs");
-    if ($result === false) {
-        die('Query failed: ' . htmlspecialchars($conn->error));
-    }
-    $logs = [];
-    while ($row = $result->fetch_assoc()) {
-        $logs[] = $row;
-    }
-    return $logs;
 }
 ?>
