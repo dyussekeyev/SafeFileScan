@@ -1,10 +1,41 @@
 <?php
-include('../navbar.php');
-
+session_start();
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
 
-checkAdminAuth();
+// Check if the user is logging in
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_POST['password'])) {
+    $username = $_POST['login'];
+    $password = $_POST['password'];
+
+    // Validate user credentials
+    $stmt = $conn->prepare("SELECT username, role FROM admins WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $stmt->bind_result($username, $role);
+    $stmt->fetch();
+    
+    if ($username) {
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
+    } else {
+        $error = "Invalid login credentials.";
+    }
+    $stmt->close();
+}
+
+// Check if the user is logging out
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
+
+// Check if user is authenticated
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete_file'])) {
@@ -38,44 +69,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<h1>Admin Dashboard</h1>
+<?php if (!isset($_SESSION['username'])): ?>
+    <h1>Admin Login</h1>
+    <form method="post" action="index.php">
+        Username: <input type="text" name="login" required><br>
+        Password: <input type="password" name="password" required><br>
+        <input type="submit" value="Log in">
+    </form>
+    <?php if (isset($error)): ?>
+        <p style="color:red;"><?php echo $error; ?></p>
+    <?php endif; ?>
+<?php else: ?>
+    <h1>Admin Dashboard</h1>
+    <a href="index.php?logout=true">Log out</a>
 
-<h2>Delete File Info</h2>
-<form action="index.php" method="post">
-    <input type="hidden" name="delete_file" value="1">
-    Enter File ID to delete:
-    <input type="text" name="file_id">
-    <input type="submit" value="Delete File">
-</form>
+    <h2>Delete File Info</h2>
+    <form action="index.php" method="post">
+        <input type="hidden" name="delete_file" value="1">
+        Enter File ID to delete:
+        <input type="text" name="file_id">
+        <input type="submit" value="Delete File">
+    </form>
 
-<h2>Delete Scan Result</h2>
-<form action="index.php" method="post">
-    <input type="hidden" name="delete_scan" value="1">
-    Enter Scan ID to delete:
-    <input type="text" name="scan_id">
-    <input type="submit" value="Delete Scan">
-</form>
+    <h2>Delete Scan Result</h2>
+    <form action="index.php" method="post">
+        <input type="hidden" name="delete_scan" value="1">
+        Enter Scan ID to delete:
+        <input type="text" name="scan_id">
+        <input type="submit" value="Delete Scan">
+    </form>
 
-<h2>Create Admin</h2>
-<form action="index.php" method="post">
-    <input type="hidden" name="create_admin" value="1">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    Role: 
-    <select name="role">
-        <option value="admin">Admin</option>
-        <option value="superadmin">SuperAdmin</option>
-    </select><br>
-    <input type="submit" value="Create Admin">
-</form>
+    <h2>Create Admin</h2>
+    <form action="index.php" method="post">
+        <input type="hidden" name="create_admin" value="1">
+        Username: <input type="text" name="username"><br>
+        Password: <input type="password" name="password"><br>
+        Role: 
+        <select name="role">
+            <option value="admin">Admin</option>
+            <option value="superadmin">SuperAdmin</option>
+        </select><br>
+        <input type="submit" value="Create Admin">
+    </form>
 
-<h2>Change Admin Password</h2>
-<form action="index.php" method="post">
-    <input type="hidden" name="change_password" value="1">
-    Username: <input type="text" name="username"><br>
-    New Password: <input type="password" name="new_password"><br>
-    <input type="submit" value="Change Password">
-</form>
+    <h2>Change Admin Password</h2>
+    <form action="index.php" method="post">
+        <input type="hidden" name="change_password" value="1">
+        Username: <input type="text" name="username"><br>
+        New Password: <input type="password" name="new_password"><br>
+        <input type="submit" value="Change Password">
+    </form>
+<?php endif; ?>
 
 </body>
 </html>
