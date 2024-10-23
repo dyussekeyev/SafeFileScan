@@ -65,18 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $scanId = $_POST['scan_id'];
         deleteScanResult($scanId);
         echo 'Scan result deleted successfully.';
-    } else if (isset($_POST['create_admin'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        createAdmin($username, $hashedPassword);
-        echo 'Admin created successfully.';
-    } else if (isset($_POST['change_password'])) {
-        $username = $_POST['username'];
-        $newPassword = $_POST['new_password'];
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        changeAdminPassword($username, $hashedPassword);
-        echo 'Password changed successfully.';
     }
 }
 ?>
@@ -105,22 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         Enter Scan ID to delete:
         <input type="text" name="scan_id">
         <input type="submit" value="Delete Scan">
-    </form>
-
-    <h2>Create Admin</h2>
-    <form action="index.php" method="post">
-        <input type="hidden" name="create_admin" value="1">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Create Admin">
-    </form>
-
-    <h2>Change Admin Password</h2>
-    <form action="index.php" method="post">
-        <input type="hidden" name="change_password" value="1">
-        Username: <input type="text" name="username"><br>
-        New Password: <input type="password" name="new_password"><br>
-        <input type="submit" value="Change Password">
     </form>
 </body>
 </html>
