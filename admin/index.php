@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_PO
     
     if ($username) {
         $_SESSION['username'] = $username;
+        header("Location: index.php");
+        exit();
     } else {
         $error = "Invalid login credentials.";
     }
@@ -32,7 +34,27 @@ if (isset($_GET['logout'])) {
 
 // Check if user is authenticated
 if (!isset($_SESSION['username'])) {
-    header("Location: index.php");
+    // Display the login form if the user is not authenticated
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Admin Login</title>
+        <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    </head>
+    <body>
+        <h1>Admin Login</h1>
+        <form method="post" action="index.php">
+            Username: <input type="text" name="login" required><br>
+            Password: <input type="password" name="password" required><br>
+            <input type="submit" value="Log in">
+        </form>
+        <?php if (isset($error)): ?>
+            <p style="color:red;"><?php echo $error; ?></p>
+        <?php endif; ?>
+    </body>
+    </html>
+    <?php
     exit();
 }
 
@@ -66,18 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
-
-<?php if (!isset($_SESSION['username'])): ?>
-    <h1>Admin Login</h1>
-    <form method="post" action="index.php">
-        Username: <input type="text" name="login" required><br>
-        Password: <input type="password" name="password" required><br>
-        <input type="submit" value="Log in">
-    </form>
-    <?php if (isset($error)): ?>
-        <p style="color:red;"><?php echo $error; ?></p>
-    <?php endif; ?>
-<?php else: ?>
     <h1>Admin Dashboard</h1>
     <a href="index.php?logout=true">Log out</a>
 
@@ -112,7 +122,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         New Password: <input type="password" name="new_password"><br>
         <input type="submit" value="Change Password">
     </form>
-<?php endif; ?>
-
 </body>
 </html>
