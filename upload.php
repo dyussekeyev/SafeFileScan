@@ -25,15 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
             $existingFile = searchFileByHash($hashes['sha1']);
             if ($existingFile) {
                 $fileId = $existingFile['id'];
-                echo 'File already exists. Rescanning...';
+                echo '<p>File already exists.</p>';
 
-                // Perform AV scans (pseudo code)
-                $results = performAVScans($filePath);
+                // Initialize scan
+                initScan($fileId);
 
-                // Save scan results
-                saveScanResults($fileId, $results);
-
-                echo 'File rescanned successfully.';
+                echo '<p>Initialized for analysis successfully.</p>';
             } else {
                 if (move_uploaded_file($tempPath, $filePath)) {
                     // Save file info to database
@@ -43,22 +40,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
                     $fileInfo = searchFileByHash($hashes['sha1']);
                     $fileId = $fileInfo['id'];
 
-                    // Perform AV scans (pseudo code)
-                    $results = performAVScans($filePath);
+                    // Initialize scan
+                    initScan($fileId);
 
-                    // Save scan results
-                    saveScanResults($fileId, $results);
-
-                    echo 'File uploaded and analyzed successfully.';
+                    echo '<p>File uploaded and initialized for analysis successfully.</p>';
                 } else {
-                    echo 'File upload failed.';
+                    echo '<p>File upload failed.</p>';
                 }
             }
         } catch (ValueError $e) {
             echo 'Error: ' . htmlspecialchars($e->getMessage());
         }
     } else {
-        echo 'File upload failed: temporary path is empty.';
+        echo '<p>File upload failed: temporary path is empty.</p>';
     }
 }
 ?>
