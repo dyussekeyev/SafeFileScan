@@ -3,12 +3,17 @@ CREATE DATABASE IF NOT EXISTS safefilescan_db;
 USE safefilescan_db;
 
 -- Create tables
-CREATE TABLE users (
+CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'superadmin') NOT NULL,
-    privileges TEXT
+    date_last_logon DATETIME NOT NULL
+);
+
+CREATE TABLE avs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    api_key VARCHAR(255)
 );
 
 CREATE TABLE files (
@@ -18,29 +23,21 @@ CREATE TABLE files (
     hash_sha256 VARCHAR(64) NOT NULL,
     size INT NOT NULL,
     file_type VARCHAR(255),
-    date_first_upload DATETIME NOT NULL,
-    date_last_analysis DATETIME NOT NULL
+    date_first_upload DATETIME NOT NULL
 );
 
-CREATE TABLE scan_results (
+CREATE TABLE scans (
     id INT AUTO_INCREMENT PRIMARY KEY,
     file_id INT NOT NULL,
+    av_id INT NOT NULL,
     verdict_kaspersky VARCHAR(255),
-    verdict_trendmicro VARCHAR(255),
-    verdict_eset VARCHAR(255),
     date_scan DATETIME NOT NULL,
-    FOREIGN KEY (file_id) REFERENCES files(id)
-);
-
-CREATE TABLE event_logs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    event_type VARCHAR(50) NOT NULL,
-    event_description TEXT NOT NULL,
-    event_date DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (file_id) REFERENCES files(id),
+    FOREIGN KEY (av_id) REFERENCES files(id),
 );
 
 -- Create default users
-INSERT INTO users (username, password, role) VALUES ('superadmin', 'password', 'superadmin');
-INSERT INTO users (username, password, role) VALUES ('admin', 'password', 'admin');
+INSERT INTO users (username, password,) VALUES ('admin', 'dummy');
+
+-- Create default avs
+INSERT INTO avs (name) VALUES ('Kaspersky', 'dummy');
