@@ -33,11 +33,11 @@ CREATE TABLE scans (
     verdict VARCHAR(255),
     date_scan DATETIME NOT NULL,
     FOREIGN KEY (file_id) REFERENCES files(id),
-    FOREIGN KEY (av_id) REFERENCES files(id),
+    FOREIGN KEY (av_id) REFERENCES avs(id)
 );
 
--- Create default users
-INSERT INTO users (username, password) VALUES ('admin', 'dummy');
+-- Create default admins
+INSERT INTO admins (username, password, date_last_logon) VALUES ('admin', 'dummy', NOW());
 
 -- Create default avs
 INSERT INTO avs (name, api_key) VALUES ('Kaspersky', 'dummy');
