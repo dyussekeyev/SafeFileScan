@@ -98,20 +98,14 @@ function getScanResultsByFileId($fileId) {
     return $scanResults;
 }
 
-function checkAdminAuth() {
-    if (!isset($_SESSION['logged'])) {
-        header('Location: ../index.php');
-        exit;
-    }
-}
-
-function createAdmin($username, $password, $role) {
+function createAdmin($username, $password) {
     global $conn;
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("INSERT INTO admins (username, password, date_last_logon) VALUES (?, ?, NOW())");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("sss", $username, $password);
+    $stmt->bind_param("ss", $username, $hashedPassword);
     $stmt->execute();
     if ($stmt->error) {
         die('Execute failed: ' . htmlspecialchars($stmt->error));
@@ -121,11 +115,12 @@ function createAdmin($username, $password, $role) {
 
 function changeAdminPassword($username, $newPassword) {
     global $conn;
+    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("UPDATE admins SET password = ? WHERE username = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("ss", $newPassword, $username);
+    $stmt->bind_param("ss", $hashedPassword, $username);
     $stmt->execute();
     if ($stmt->error) {
         die('Execute failed: ' . htmlspecialchars($stmt->error));
