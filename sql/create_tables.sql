@@ -37,7 +37,7 @@ CREATE TABLE scans (
 );
 
 -- Create default users
-INSERT INTO users (username, password,) VALUES ('admin', 'dummy');
+INSERT INTO users (username, password) VALUES ('admin', 'dummy');
 
 -- Create default avs
-INSERT INTO avs (name) VALUES ('Kaspersky', 'dummy');
+INSERT INTO avs (name, api_key) VALUES ('Kaspersky', 'dummy');
