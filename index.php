@@ -1,6 +1,4 @@
 <?php
-include 'navbar.php';
-
 // Проверка соединения с базой данных
 if ($conn->connect_error) {
     error_log("Connection failed: " . $conn->connect_error);
