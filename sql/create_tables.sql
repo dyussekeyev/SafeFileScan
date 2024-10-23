@@ -37,7 +37,7 @@ CREATE TABLE scans (
 );
 
 -- Create default admins
-INSERT INTO admins (username, password, date_last_logon) VALUES ('admin', '$2y$10$353UsNHSKvoe2BN/WjZd3eR114RDNqWjIlzSN5Oi/3Ji..lRwhmZi', NOW());
+INSERT INTO admins (username, password, date_last_logon) VALUES ('superadmin', '$2y$10$iWwEF8cr0VCJvsx/2fcWoeKou4w99HAwlqTYp7rUI3b3LWNyURNZG', NOW());
 
 -- Create default avs
 INSERT INTO avs (name, api_key) VALUES ('Kaspersky', 'dummy');
