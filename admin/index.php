@@ -35,7 +35,7 @@ if (isset($_GET['logout'])) {
 // Check if user is authenticated
 if (!isset($_SESSION['username'])) {
     // Display the login form if the user is not authenticated
-    ?>
+?>
     <!DOCTYPE html>
     <html>
     <head>
@@ -49,12 +49,9 @@ if (!isset($_SESSION['username'])) {
             Password: <input type="password" name="password" required><br>
             <input type="submit" value="Log in">
         </form>
-        <?php if (isset($error)): ?>
-            <p style="color:red;"><?php echo $error; ?></p>
-        <?php endif; ?>
     </body>
     </html>
-    <?php
+<?php
     exit();
 }
 
