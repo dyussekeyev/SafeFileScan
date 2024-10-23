@@ -9,15 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_PO
     $password = $_POST['password'];
 
     // Validate user credentials
-    $stmt = $conn->prepare("SELECT username, role FROM admins WHERE username = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT username FROM admins WHERE username = ? AND password = ?");
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
-    $stmt->bind_result($username, $role);
+    $stmt->bind_result($username);
     $stmt->fetch();
     
     if ($username) {
         $_SESSION['username'] = $username;
-        $_SESSION['role'] = $role;
     } else {
         $error = "Invalid login credentials.";
     }
@@ -49,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (isset($_POST['create_admin'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $role = $_POST['role'];
-        createAdmin($username, $password, $role);
+        createAdmin($username, $password);
         echo 'Admin created successfully.';
     } else if (isset($_POST['change_password'])) {
         $username = $_POST['username'];
@@ -104,11 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="hidden" name="create_admin" value="1">
         Username: <input type="text" name="username"><br>
         Password: <input type="password" name="password"><br>
-        Role: 
-        <select name="role">
-            <option value="admin">Admin</option>
-            <option value="superadmin">SuperAdmin</option>
-        </select><br>
         <input type="submit" value="Create Admin">
     </form>
 
