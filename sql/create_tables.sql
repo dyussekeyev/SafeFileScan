@@ -30,7 +30,7 @@ CREATE TABLE scans (
     id INT AUTO_INCREMENT PRIMARY KEY,
     file_id INT NOT NULL,
     av_id INT NOT NULL,
-    verdict_kaspersky VARCHAR(255),
+    verdict VARCHAR(255),
     date_scan DATETIME NOT NULL,
     FOREIGN KEY (file_id) REFERENCES files(id),
     FOREIGN KEY (av_id) REFERENCES files(id),
