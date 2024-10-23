@@ -34,14 +34,13 @@ if (isset($_GET['hash'])) {
         $scanResults = getScanResultsByFileId($fileInfo['id']);
         if ($scanResults) {
             echo '<table border="1">';
-            echo '<tr><th>Scan ID</th><th>Scan Date</th><th>Kaspersky</th><th>Trend Micro</th><th>ESET</th></tr>';
+            echo '<tr><th>Scan ID</th><th>Scan Date</th><th>AV Name</th><th>Verdict</th></tr>';
             foreach ($scanResults as $result) {
                 echo '<tr>';
                 echo '<td>' . htmlspecialchars($result['id']) . '</td>';
                 echo '<td>' . htmlspecialchars($result['date_scan']) . '</td>';
-                echo '<td>' . htmlspecialchars($result['verdict_kaspersky']) . '</td>';
-                echo '<td>' . htmlspecialchars($result['verdict_trendmicro']) . '</td>';
-                echo '<td>' . htmlspecialchars($result['verdict_eset']) . '</td>';
+                echo '<td>' . htmlspecialchars($result['av_name']) . '</td>';
+                echo '<td>' . htmlspecialchars($result['verdict']) . '</td>';
                 echo '</tr>';
             }
             echo '</table>';
