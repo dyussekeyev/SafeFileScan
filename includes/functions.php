@@ -74,9 +74,13 @@ function searchFileByHash($hash) {
 }
 
 function getScanResultsByFileId($fileId) {
-    global $conn; // Assuming $conn is your database connection
-
-    $stmt = $conn->prepare("SELECT id, verdict, date_scan FROM scans WHERE file_id = ?");
+    global $conn;
+    $stmt = $conn->prepare('
+        SELECT scans.id, scans.date_scan, avs.name AS av_name, scans.verdict
+        FROM scans
+        JOIN avs ON scans.av_id = avs.id
+        WHERE scans.file_id = ?
+    ');
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -87,11 +91,9 @@ function getScanResultsByFileId($fileId) {
     }
     $result = $stmt->get_result();
     $scanResults = [];
-
     while ($row = $result->fetch_assoc()) {
         $scanResults[] = $row;
     }
-
     $stmt->close();
     return $scanResults;
 }
