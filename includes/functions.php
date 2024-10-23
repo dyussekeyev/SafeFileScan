@@ -19,6 +19,7 @@ function getBasicProperties($filePath) {
 
 function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     global $conn;
+    $file_type = substr($file_type, 0, 100);    
     $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, file_type, date_first_upload) VALUES (?, ?, ?, ?, ?, NOW())");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
