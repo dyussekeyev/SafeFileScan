@@ -19,7 +19,7 @@ function getBasicProperties($filePath) {
 
 function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, file_type, date_first_upload, date_last_analysis) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
+    $stmt = $conn->prepare("INSERT INTO files (hash_md5, hash_sha1, hash_sha256, size, file_type, date_first_upload) VALUES (?, ?, ?, ?, ?, NOW())");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -44,28 +44,16 @@ function saveScanResults($file_id, $results) {
     global $conn;
     
     // Insert scan results
-    $stmt = $conn->prepare("INSERT INTO scan_results (file_id, verdict_kaspersky, verdict_trendmicro, verdict_eset, date_scan) VALUES (?, ?, ?, ?, NOW())");
+    $stmt = $conn->prepare("INSERT INTO scans (file_id, verdict_kaspersky, date_scan) VALUES (?, ?, NOW())");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("isss", $file_id, $results['Kaspersky'], $results['Trend Micro'], $results['ESET']);
+    $stmt->bind_param("is", $file_id, $results['Kaspersky']);
     $stmt->execute();
     if ($stmt->error) {
         die('Execute failed: ' . htmlspecialchars($stmt->error));
     }
     $stmt->close();
-    
-    // Update date_last_analysis in files table
-    $updateStmt = $conn->prepare("UPDATE files SET date_last_analysis = NOW() WHERE id = ?");
-    if ($updateStmt === false) {
-        die('Prepare failed: ' . htmlspecialchars($conn->error));
-    }
-    $updateStmt->bind_param("i", $file_id);
-    $updateStmt->execute();
-    if ($updateStmt->error) {
-        die('Execute failed: ' . htmlspecialchars($updateStmt->error));
-    }
-    $updateStmt->close();
 }
 
 function searchFileByHash($hash) {
@@ -88,7 +76,7 @@ function searchFileByHash($hash) {
 function getScanResultsByFileId($fileId) {
     global $conn; // Assuming $conn is your database connection
 
-    $stmt = $conn->prepare("SELECT id, verdict_kaspersky, verdict_trendmicro, verdict_eset, date_scan FROM scan_results WHERE file_id = ?");
+    $stmt = $conn->prepare("SELECT id, verdict_kaspersky, date_scan FROM scans WHERE file_id = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -124,11 +112,11 @@ function checkSuperAdminAuth() {
 
 function createAdmin($username, $password, $role) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO admins (username, password, date_last_logon) VALUES (?, ?, NOW())");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("sss", $username, $password, $role);
+    $stmt->bind_param("sss", $username, $password);
     $stmt->execute();
     if ($stmt->error) {
         die('Execute failed: ' . htmlspecialchars($stmt->error));
@@ -138,7 +126,7 @@ function createAdmin($username, $password, $role) {
 
 function changeAdminPassword($username, $newPassword) {
     global $conn;
-    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE username = ?");
+    $stmt = $conn->prepare("UPDATE admins SET password = ? WHERE username = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -152,7 +140,7 @@ function changeAdminPassword($username, $newPassword) {
 
 function deleteScanResult($scanId) {
     global $conn;
-    $stmt = $conn->prepare("DELETE FROM scan_results WHERE id = ?");
+    $stmt = $conn->prepare("DELETE FROM scans WHERE id = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -168,7 +156,7 @@ function deleteFileInfo($fileId) {
     global $conn;
 
     // Delete related scan results
-    $stmt = $conn->prepare("DELETE FROM scan_results WHERE file_id = ?");
+    $stmt = $conn->prepare("DELETE FROM scans WHERE file_id = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
