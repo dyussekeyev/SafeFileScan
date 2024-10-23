@@ -31,9 +31,6 @@ function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     $stmt->close();
 }
 
-function initAVScans($filePath) {
-}
-
 function saveScanResults($file_id, $results) {
     global $conn;
     
