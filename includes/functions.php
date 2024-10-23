@@ -31,20 +31,29 @@ function saveFileInfo($hash_md5, $hash_sha1, $hash_sha256, $size, $file_type) {
     $stmt->close();
 }
 
-function saveScanResults($file_id, $results) {
+function initScan($file_id) {
     global $conn;
-    
-    // Insert scan results
-    $stmt = $conn->prepare("INSERT INTO scans (file_id, verdict_kaspersky, date_scan) VALUES (?, ?, NOW())");
-    if ($stmt === false) {
-        die('Prepare failed: ' . htmlspecialchars($conn->error));
+
+    // Enumerate rows from the avs table
+    $result = $conn->query("SELECT id FROM avs");
+    if ($result === false) {
+        die('Query failed: ' . htmlspecialchars($conn->error));
     }
-    $stmt->bind_param("is", $file_id, $results['Kaspersky']);
-    $stmt->execute();
-    if ($stmt->error) {
-        die('Execute failed: ' . htmlspecialchars($stmt->error));
+
+    // Iterate over each AV and create a scan record
+    while ($row = $result->fetch_assoc()) {
+        $av_id = $row['id'];
+        $stmt = $conn->prepare("INSERT INTO scans (file_id, av_id, verdict, date_scan) VALUES (?, ?, 'Pending...', NOW())");
+        if ($stmt === false) {
+            die('Prepare failed: ' . htmlspecialchars($conn->error));
+        }
+        $stmt->bind_param("ii", $file_id, $av_id);
+        $stmt->execute();
+        if ($stmt->error) {
+            die('Execute failed: ' . htmlspecialchars($stmt->error));
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 
 function searchFileByHash($hash) {
@@ -67,7 +76,7 @@ function searchFileByHash($hash) {
 function getScanResultsByFileId($fileId) {
     global $conn; // Assuming $conn is your database connection
 
-    $stmt = $conn->prepare("SELECT id, verdict_kaspersky, date_scan FROM scans WHERE file_id = ?");
+    $stmt = $conn->prepare("SELECT id, verdict, date_scan FROM scans WHERE file_id = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
