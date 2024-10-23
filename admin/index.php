@@ -5,17 +5,18 @@ require_once '../includes/functions.php';
 
 // Check if the user is logging in
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_POST['password'])) {
-    $username = '';
+    $username = $_POST['login'];
+    $password = $_POST['password'];
 
     // Validate user credentials
-    $stmt = $conn->prepare("SELECT username FROM admins WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $_POST['login'], $_POST['password']);
+    $stmt = $conn->prepare("SELECT username, password FROM admins WHERE username = ?");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
-    $stmt->bind_result($username);
+    $stmt->bind_result($db_username, $db_password);
     $stmt->fetch();
 
-    if ($username == $_POST['login']) {
-        $_SESSION['username'] = $username;
+    if ($db_username && password_verify($password, $db_password)) {
+        $_SESSION['username'] = $db_username;
         header("Location: index.php");
         exit();
     } else {
@@ -43,6 +44,7 @@ if (!isset($_SESSION['username'])) {
     </head>
     <body>
         <h1>Admin Login</h1>
+        <?php if (isset($error)) echo '<p style="color:red;">' . $error . '</p>'; ?>
         <form method="post" action="index.php">
             Username: <input type="text" name="login" required><br>
             Password: <input type="password" name="password" required><br>
@@ -66,12 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (isset($_POST['create_admin'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        createAdmin($username, $password);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        createAdmin($username, $hashedPassword);
         echo 'Admin created successfully.';
     } else if (isset($_POST['change_password'])) {
         $username = $_POST['username'];
         $newPassword = $_POST['new_password'];
-        changeAdminPassword($username, $newPassword);
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        changeAdminPassword($username, $hashedPassword);
         echo 'Password changed successfully.';
     }
 }
