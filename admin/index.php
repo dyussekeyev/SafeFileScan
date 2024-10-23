@@ -5,17 +5,16 @@ require_once '../includes/functions.php';
 
 // Check if the user is logging in
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_POST['password'])) {
-    $username = $_POST['login'];
-    $password = $_POST['password'];
+    $username = '';
 
     // Validate user credentials
     $stmt = $conn->prepare("SELECT username FROM admins WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("ss", $_POST['login'], $_POST['password']);
     $stmt->execute();
     $stmt->bind_result($username);
     $stmt->fetch();
-    
-    if ($username) {
+
+    if ($username == $_POST['login']) {
         $_SESSION['username'] = $username;
         header("Location: index.php");
         exit();
