@@ -6,6 +6,14 @@
 </head>
 <body>
 
+<div class="menu">
+    <a href="index.php">Home</a>
+    <form action="search.php" method="get" style="margin: 0;">
+        <input type="text" name="hash" placeholder="Enter hash">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
 <?php
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
