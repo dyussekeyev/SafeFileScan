@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
                 }
             }
         } catch (ValueError $e) {
-            echo '<p>Error: ' . htmlspecialchars($e->getMessage()) . '</p>;
+            echo '<p>Error: ' . htmlspecialchars($e->getMessage()) . '</p>';
         }
     } else {
         echo '<p>File upload failed: temporary path is empty.</p>';
