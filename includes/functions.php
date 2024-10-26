@@ -1,10 +1,19 @@
 <?php
-function getRecentFiles($conn) {
-    $stmt = $conn->prepare("SELECT * FROM files ORDER BY date_first_upload DESC LIMIT 10");
+function getRecentFiles($limit) {
+    global $conn;
+
+    $limit = intval($limit);
+    if ($limit <= 0) {
+        $limit = 10; // default value
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM files ORDER BY date_first_upload DESC LIMIT ?");
     if ($stmt === false) {
         error_log("Prepare failed: " . $conn->error);
         die("Query preparation failed. Please try again later.");
     }
+
+    $stmt->bind_param("i", $limit);
 
     if (!$stmt->execute()) {
         error_log("Execute failed: " . $stmt->error);
@@ -13,7 +22,7 @@ function getRecentFiles($conn) {
 
     $result = $stmt->get_result();
     if ($result === false) {
-        error_log("Get result failed: " . $stmt->error);
+        error_log("Get result failed: " . $conn->error);
         die("Fetching results failed. Please try again later.");
     }
 
