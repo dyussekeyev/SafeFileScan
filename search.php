@@ -25,6 +25,8 @@ if ($conn->connect_error) {
     </form>
 </div>
 
+<h1>File search</h1>
+
 <?php
 // Handle file search
 if (isset($_GET['hash'])) {
