@@ -7,9 +7,8 @@ SafeFileScan is an awkward parody of VirusTotal, created to scan files for poten
 - [Structure](#structure)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Admin and Superadmin](#admin-and-superadmin)
+- [Admin](#administration)
 - [Includes](#includes)
-- [Logs and Uploads](#logs-and-uploads)
 - [Contribution](#contribution)
 - [License](#license)
 
@@ -58,7 +57,7 @@ SafeFileScan/
    - `search.php`: Search for previous scans.
    - `upload.php`: Upload files.
 
-## Admin
+## Administration
 
 Admin pages are located in the `admin/` directory, which includes functionalities for managing scans and files.
 
