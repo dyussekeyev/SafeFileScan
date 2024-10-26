@@ -1,15 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SafeFileScan - Загрузка файла</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-</head>
-<body>
-
 <?php
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
+// Checking database connection
+if ($conn->connect_error) {
+    error_log("Connection failed: " . $conn->connect_error);
+    die("Connection failed. Please try again later.");
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SafeFileScan - File upload</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<body>
+
+<div class="menu">
+    <a href="index.php">Home</a>
+    <form action="search.php" method="get" style="margin: 0;">
+        <input type="text" name="hash" placeholder="Enter hash">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<h1>File uploading...</h1>
+    
+<?php
 // Handle file upload and analysis
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     $file = $_FILES['fileToUpload'];
