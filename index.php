@@ -35,33 +35,6 @@ $stmt->close();
 <head>
     <title>SafeFileScan</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <style>
-        .menu {
-            display: flex;
-            background-color: #333;
-            padding: 10px;
-        }
-        .menu a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: center;
-        }
-        .menu input[type="text"] {
-            padding: 7px;
-            margin-right: 10px;
-        }
-        .menu input[type="submit"] {
-            padding: 7px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .menu input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
 </head>
 <body>
 
