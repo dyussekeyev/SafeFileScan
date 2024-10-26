@@ -3,17 +3,17 @@ import sys
 import argparse
 
 def get_scans(api_key, base_url):
-    response = requests.get(f"{base_url}/api/get_scans.php", headers={"Authorization": f"Bearer {api_key}"})
+    response = requests.post(f"{base_url}/api/get_scans.php", json={"api_key": api_key})
     response.raise_for_status()
     return response.json()
 
-def get_file(api_key, base_url, file_id):
-    response = requests.get(f"{base_url}/api/get_file.php", headers={"Authorization": f"Bearer {api_key}"}, params={"id": file_id})
+def get_file(api_key, base_url, scan_id):
+    response = requests.post(f"{base_url}/api/get_file.php", json={"api_key": api_key, "scan_id": scan_id})
     response.raise_for_status()
     return response.content
 
-def put_scan(api_key, base_url, file_id, verdict):
-    response = requests.post(f"{base_url}/api/put_scan.php", headers={"Authorization": f"Bearer {api_key}"}, data={"id": file_id, "verdict": verdict})
+def put_scan(api_key, base_url, scan_id, verdict):
+    response = requests.post(f"{base_url}/api/put_scan.php", json={"api_key": api_key, "scan_id": scan_id, "verdict": verdict})
     response.raise_for_status()
     return response.json()
 
@@ -27,15 +27,15 @@ def main():
     try:
         # Get list of IDs
         scans = get_scans(args.api_key, args.base_url)
-        for scan in scans:
-            file_id = scan['id']
+        for scan in scans["scans"]:
+            scan_id = scan
             # Download file
-            file_content = get_file(args.api_key, args.base_url, file_id)
+            file_content = get_file(args.api_key, args.base_url, scan_id)
             file_size = len(file_content)
             # Send result
             verdict = f"Dummy result - {file_size}"
-            put_scan(args.api_key, args.base_url, file_id, verdict)
-            print(f"Processed file ID {file_id} with size {file_size} bytes.")
+            put_scan(args.api_key, args.base_url, scan_id, verdict)
+            print(f"Processed file ID {scan_id} with size {file_size} bytes.")
     
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
