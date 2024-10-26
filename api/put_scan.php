@@ -10,9 +10,9 @@ if (!isset($data['api_key']) || !isset($data['scan_id']) || !isset($data['verdic
     exit();
 }
 
-$api_key = $data['api_key'];
-$scan_id = $data['scan_id'];
-$verdict = $data['verdict'];
+$api_key = htmlspecialchars($data['api_key']);
+$scan_id = htmlspecialchars($data['scan_id']);
+$verdict = htmlspecialchars($data['verdict']);
 
 // Check API key
 $stmt = $conn->prepare("SELECT id FROM avs WHERE api_key = ?");
@@ -24,6 +24,19 @@ $stmt->close();
 
 if (!$av_id) {
     echo json_encode(['error' => 'Invalid API key']);
+    exit();
+}
+
+// Check if the scan record exists and is pending
+$stmt = $conn->prepare("SELECT id FROM scans WHERE id = ? AND av_id = ? AND verdict = 'Pending...'");
+$stmt->bind_param("ii", $scan_id, $av_id);
+$stmt->execute();
+$stmt->bind_result($existing_scan_id);
+$stmt->fetch();
+$stmt->close();
+
+if (!$existing_scan_id) {
+    echo json_encode(['error' => 'No pending scan found for the provided scan ID and API key']);
     exit();
 }
 
