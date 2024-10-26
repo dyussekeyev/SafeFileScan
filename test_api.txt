@@ -1,0 +1,5 @@
+curl -X POST -H "Content-Type: application/json" -d '{"api_key": "YOUR_API_KEY"}' https://BASE_URL/api/get_scans.php
+
+curl -X POST -H "Content-Type: application/json" -d '{"api_key": "YOUR_API_KEY", "scan_id": "SCAN_ID"}' https://BASE_URL/api/get_file.php
+
+curl -X POST -H "Content-Type: application/json" -d '{"api_key": "YOUR_API_KEY", "scan_id": "SCAN_ID", "verdict": "Dummy result - FILE_SIZE"}' https://BASE_URL/api/put_scan.php
