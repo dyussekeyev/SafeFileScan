@@ -20,9 +20,9 @@ require_once 'includes/functions.php';
 
 // Handle file search
 if (isset($_GET['hash'])) {
-    $hash = $_GET['hash'];
+    $hash = htmlspecialchars($_GET['hash']);
     $fileInfo = searchFileByHash($hash);
-    
+
     if ($fileInfo) {
         // Display file info in a table
         echo '<h2>File Info</h2>';
