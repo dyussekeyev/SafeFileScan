@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
     if (!empty($tempPath)) {
         try {
             $hashes = getBasicProperties($tempPath);
-            $filePath = 'uploads/' . $hashes['sha1'];
+            $filePath = '../uploads/' . $hashes['sha1'];
 
             // Check if file already exists by hash
             $existingFile = searchFileByHash($hashes['sha1']);
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
                 }
             }
         } catch (ValueError $e) {
-            echo 'Error: ' . htmlspecialchars($e->getMessage());
+            echo '<p>Error: ' . htmlspecialchars($e->getMessage()) . '</p>;
         }
     } else {
         echo '<p>File upload failed: temporary path is empty.</p>';
