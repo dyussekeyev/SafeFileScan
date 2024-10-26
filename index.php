@@ -2,7 +2,7 @@
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
-// Проверка соединения с базой данных
+// Checking database connection
 if ($conn->connect_error) {
     error_log("Connection failed: " . $conn->connect_error);
     die("Connection failed. Please try again later.");
