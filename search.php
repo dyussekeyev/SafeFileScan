@@ -63,10 +63,10 @@ if (isset($_GET['hash'])) {
             }
             echo '</table>';
         } else {
-            echo 'No scan results found for this file.';
+            echo '<p>No scan results found for this file.</p>';
         }
     } else {
-        echo 'No file found with the given hash.';
+        echo '<p>No file found with the given hash.</p>';
     }
 }
 ?>
