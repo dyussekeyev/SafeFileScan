@@ -9,7 +9,7 @@ if (!isset($data['api_key'])) {
     exit();
 }
 
-$api_key = $data['api_key'];
+$api_key = htmlspecialchars($data['api_key']);
 
 // Check API key
 $stmt = $conn->prepare("SELECT id FROM avs WHERE api_key = ?");
