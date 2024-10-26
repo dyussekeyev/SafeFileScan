@@ -5,14 +5,15 @@ require_once '../includes/functions.php';
 header('Content-Type: application/json');
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($data['api_key']) || !isset($data['scan_id']) || !isset($data['verdict'])) {
-    echo json_encode(['error' => 'API key, scan ID, and verdict are required']);
+if (!isset($data['api_key']) || !isset($data['scan_id']) || !isset($data['verdict']) || !isset($data['sha1'])) {
+    echo json_encode(['error' => 'API key, scan ID, verdict, and sha1 are required']);
     exit();
 }
 
 $api_key = htmlspecialchars($data['api_key']);
 $scan_id = htmlspecialchars($data['scan_id']);
 $verdict = htmlspecialchars($data['verdict']);
+$sha1 = htmlspecialchars($data['sha1']);
 
 // Check API key
 $stmt = $conn->prepare("SELECT id FROM avs WHERE api_key = ?");
@@ -27,16 +28,18 @@ if (!$av_id) {
     exit();
 }
 
-// Check if the scan record exists and is pending
-$stmt = $conn->prepare("SELECT id FROM scans WHERE id = ? AND av_id = ? AND verdict = 'Pending...'");
-$stmt->bind_param("ii", $scan_id, $av_id);
+// Check if the scan record exists and is pending, and if file_id corresponds to files.id and files.hash_sha1 equals the provided sha1
+$stmt = $conn->prepare("SELECT scans.id FROM scans 
+                        JOIN files ON scans.file_id = files.id 
+                        WHERE scans.id = ? AND scans.av_id = ? AND scans.verdict = 'Pending...' AND files.hash_sha1 = ?");
+$stmt->bind_param("iis", $scan_id, $av_id, $sha1);
 $stmt->execute();
 $stmt->bind_result($existing_scan_id);
 $stmt->fetch();
 $stmt->close();
 
 if (!$existing_scan_id) {
-    echo json_encode(['error' => 'No pending scan found for the provided scan ID and API key']);
+    echo json_encode(['error' => 'No pending scan found for the provided scan ID, API key, and sha1']);
     exit();
 }
 
