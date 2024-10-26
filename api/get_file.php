@@ -39,7 +39,7 @@ if (!$file_hash) {
     exit();
 }
 
-$file_path = "../uploads/$file_hash";
+$file_path = "../../uploads/$file_hash";
 if (!file_exists($file_path)) {
     echo json_encode(['error' => 'File not found']);
     exit();
