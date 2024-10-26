@@ -1,3 +1,14 @@
+<?php
+require_once 'includes/db.php';
+require_once 'includes/functions.php';
+
+// Checking database connection
+if ($conn->connect_error) {
+    error_log("Connection failed: " . $conn->connect_error);
+    die("Connection failed. Please try again later.");
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +26,6 @@
 </div>
 
 <?php
-require_once 'includes/db.php';
-require_once 'includes/functions.php';
-
 // Handle file search
 if (isset($_GET['hash'])) {
     $hash = htmlspecialchars($_GET['hash']);
