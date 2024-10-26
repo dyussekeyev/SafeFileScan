@@ -10,8 +10,8 @@ if (!isset($data['api_key']) || !isset($data['scan_id'])) {
     exit();
 }
 
-$api_key = $data['api_key'];
-$scan_id = $data['scan_id'];
+$api_key = htmlspecialchars($data['api_key']);
+$scan_id = htmlspecialchars($data['scan_id']);
 
 // Check API key
 $stmt = $conn->prepare("SELECT id FROM avs WHERE api_key = ?");
@@ -45,5 +45,15 @@ if (!file_exists($file_path)) {
     exit();
 }
 
-echo json_encode(['file_path' => $file_path]);
+// Initiate file download
+header('Content-Description: File Transfer');
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
+header('Expires: 0');
+header('Cache-Control: must-revalidate');
+header('Pragma: public');
+header('Content-Length: ' . filesize($file_path));
+flush();
+readfile($file_path);
+exit();
 ?>
