@@ -21,39 +21,34 @@ SafeFileScan is a PHP-based web application designed to scan files for potential
 ```
 SafeFileScan/
 ├── index.php
-├── navbar.php
 ├── search.php
 ├── upload.php
 ├── admin/
 │ ├── index.php
+├── api/
+│ ├── get_file.php
+│ ├── get_scans.php
+│ ├── put_scan.php
 ├── css/
 │ ├── styles.css
 ├── includes/
 │ ├── db.php
 │ ├── functions.php
-├── logs/
-│ ├── index.php
 └── sql/
 │ ├── create_tables.sql
-├── superadmin/
-│ ├── index.php
-│ ├── view_logs.php
-├── uploads/
-│ ├── index.php
 ```
 
 ## Installation
 
-1. Clone the repository: 
-    ```sh
+1. Install necessary dependencies (e.g., PHP, MySQL).
+2. Set up /etc/apache2/sites-enabled/000-default.conf by changing `DocumentRoot /var/www/html` to `DocumentRoot /var/www/SafeFileScan`
+3. Go to `/var/www` and clone the repository:
+   
+    ```
     git clone https://github.com/dyussekeyev/SafeFileScan.git
     ```
-2. Navigate to the project directory:
-    ```sh
-    cd SafeFileScan
-    ```
-3. Install necessary dependencies (e.g., PHP, MySQL).
-4. Set up the database by running the SQL script located in `sql/create_tables.sql`.
+
+5. Set up the database by running the SQL script located in `sql/create_tables.sql`.
 
 ## Usage
 
@@ -61,12 +56,11 @@ SafeFileScan/
 2. Use the provided pages to upload and scan files:
    - `index.php`: Main page to upload and scan files.
    - `search.php`: Search for previous scans.
-   - `rescan.php`: Rescan files.
+   - `upload.php`: Upload files.
 
-## Admin and Superadmin
+## Admin
 
-- Admin pages are located in the `admin/` directory, which includes functionalities for managing scans and files.
-- Superadmin pages are located in the `superadmin/` directory, including management of admins and viewing logs.
+Admin pages are located in the `admin/` directory, which includes functionalities for managing scans and files.
 
 ## Includes
 
@@ -74,14 +68,9 @@ The `includes/` directory contains:
 - `db.php`: Database connection and queries.
 - `functions.php`: General functions used throughout the project.
 
-## Logs and Uploads
-
-- `logs/`: Directory for storing logs.
-- `uploads/`: Directory for storing uploaded files.
-
 ## Contribution
 
-Contributions are welcome! Please fork this repository and submit a pull request with your improvements.
+Contributions are not welcome.
 
 ## License
 
