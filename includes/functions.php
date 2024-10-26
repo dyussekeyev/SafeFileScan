@@ -1,4 +1,27 @@
 <?php
+function getRecentFiles($conn) {
+    $stmt = $conn->prepare("SELECT * FROM files ORDER BY date_first_upload DESC LIMIT 10");
+    if ($stmt === false) {
+        error_log("Prepare failed: " . $conn->error);
+        die("Query preparation failed. Please try again later.");
+    }
+
+    if (!$stmt->execute()) {
+        error_log("Execute failed: " . $stmt->error);
+        die("Query execution failed. Please try again later.");
+    }
+
+    $result = $stmt->get_result();
+    if ($result === false) {
+        error_log("Get result failed: " . $stmt->error);
+        die("Fetching results failed. Please try again later.");
+    }
+
+    $files = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    return $files;
+}
+
 function getBasicProperties($filePath) {
     if (empty($filePath)) {
         throw new ValueError("Path cannot be empty");
