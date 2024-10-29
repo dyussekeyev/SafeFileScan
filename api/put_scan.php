@@ -28,11 +28,11 @@ if (!$av_id) {
     exit();
 }
 
-// Check if the scan record exists and is pending, and if file_id corresponds to files.id and file.hash_md5, files.hash_sha1 or files.hash_sha256 equals the provided hashe
+// Check if the scan record exists and is pending, and if file_id corresponds to files.id and file.hash_md5, files.hash_sha1 or files.hash_sha256 equals the provided hash
 $stmt = $conn->prepare("SELECT scans.id FROM scans 
                         JOIN files ON scans.file_id = files.id 
                         WHERE scans.id = ? AND scans.av_id = ? AND scans.verdict = 'Pending...' AND (files.hash_md5 = ? OR files.hash_sha1 = ? OR files.hash_sha256 = ?)");
-$stmt->bind_param("iis", $scan_id, $av_id, $hash_value);
+$stmt->bind_param("iisss", $scan_id, $av_id, $hash_value, $hash_value, $hash_value);
 $stmt->execute();
 $stmt->bind_result($existing_scan_id);
 $stmt->fetch();
